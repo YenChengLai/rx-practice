@@ -1,4 +1,4 @@
-import './'
+import './weather'
 
 document.addEventListener('DOMContentLoaded', function() {
     
