@@ -49,11 +49,9 @@ app.get('/place/:id', (req, res) => {
 
 
 app.get('/weather/:lat/:long', (req, res) => {
-  fetch(`https://api.darksky.net/forecast/${keys.darkSky}/${req.params.lat},${req.params.long}`)
+  fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?location=${req.params.lat},${req.params.long}&aggregateHours=24&contentType=json&key=${keys.visualCrossing}`)
     .then(res => res.json())
     .then(json => res.json(json));
-
-
 });
 
 
