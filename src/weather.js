@@ -40,3 +40,12 @@ inputSub.pipe(
 searchEvent.subscribe(event => {
     inputSub.next(searchBox.value);
 });
+
+const placeData = resultsEvent.pipe(
+    switchMap(event => {
+        const id = event.target.getAttribute('data');
+        return ajax.getJSON(`http://localhost:3000/place/${id}`)
+    })
+).subscribe(place => {
+    placeSub.next(place);
+});
