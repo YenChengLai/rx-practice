@@ -1,6 +1,6 @@
 import { ajax } from 'rxjs/ajax';
 import { fromEvent, BehaviorSubject, Subject, from } from "rxjs";
-import { tap, debounceTime, switchMap, skip } from "rxjs/operators";
+import { tap, debounceTime, switchMap, skip, pluck, map } from "rxjs/operators";
 import { add } from "./helpers";
 
 // DOM elements
@@ -48,4 +48,23 @@ const placeData = resultsEvent.pipe(
     })
 ).subscribe(place => {
     placeSub.next(place);
+});
+
+const weatherData = placeSub.pipe(
+    pluck('geometry', 'location'),
+    switchMap(
+        coords => {
+            return ajax.getJSON(`http://localhost:3000/weather/${coords.lat}/${coords.lng}`)
+                .pipe(
+                    map(data => {
+                        const key = `${coords.lat},${coords.lng}`;
+                        return data['locations'][key]['currentConditions'];
+                    })
+                )
+        }
+    )
+).subscribe(stream => {
+    console.log(stream);
+    // const key = Object.keys(stream.locations)[0];
+    // console.log(stream.locations[key].currentConditions);
 });
