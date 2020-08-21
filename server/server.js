@@ -9,7 +9,7 @@ app.use(cors());
 // Add your keys
 const keys = {
   //https://developers.google.com/places/web-service/intro
-  googleMaps: "YOUR KEY GOES HERE",
+  googleMaps: "AIzaSyAtI0ApGqregdHQw7GQhaYG_-n80iV7VfE",
   //https://darksky.net/dev
   darkSky: "YOUR KEY GOES HERE"
 };
