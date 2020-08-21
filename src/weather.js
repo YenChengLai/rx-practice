@@ -1,5 +1,5 @@
 import { ajax } from 'rxjs/ajax';
-import { fromEvent, BehaviorSubject, Subject, from } from "rxjs";
+import { fromEvent, BehaviorSubject, Subject, from, combineLatest } from "rxjs";
 import { tap, debounceTime, switchMap, skip, pluck, map } from "rxjs/operators";
 import { add } from "./helpers";
 
@@ -38,6 +38,7 @@ inputSub.pipe(
 });
 
 searchEvent.subscribe(event => {
+    resultBox.innerHTML = '';
     inputSub.next(searchBox.value);
 });
 
@@ -63,8 +64,17 @@ const weatherData = placeSub.pipe(
                 )
         }
     )
-).subscribe(stream => {
-    console.log(stream);
-    // const key = Object.keys(stream.locations)[0];
-    // console.log(stream.locations[key].currentConditions);
+);
+
+combineLatest(weatherData, placeSub).subscribe(result => {
+    const weather = result[0];
+    const place = result[1];
+    document.getElementById('image-container').innerHTML = '';
+    add.div(
+        `<div>
+            <p>Temperature: ${Math.round(weather.temp)}&deg;</p>
+            <p>Current Conditions: ${weather.icon}</p>
+            <p>Visibility: ${!!weather.visibility ?weather.visibility : 'N\\A' }</p>
+        </div>`
+    )
 });
