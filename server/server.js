@@ -6,13 +6,8 @@ const port = 3000;
 app.use(cors());
 
 
-// Add your keys
-const keys = {
-  //https://developers.google.com/places/web-service/intro
-  googleMaps: "AIzaSyAtI0ApGqregdHQw7GQhaYG_-n80iV7VfE",
-  //https://darksky.net/dev
-  darkSky: "YOUR KEY GOES HERE"
-};
+// API keys hidden in config
+const keys = require('./config');
 
 
 const googleMapsClient = require('@google/maps').createClient({
