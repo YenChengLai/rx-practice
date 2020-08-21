@@ -18,7 +18,7 @@ const resultsEvent = fromEvent(resultBox, 'click');
 // Subjects: for multiple subscribers
 const inputSub = new BehaviorSubject(firstTerm);
 const placeSub = new Subject();
-const weatherSub = new Subject();
+const keys = require('../server/config');
 
 
 
@@ -89,7 +89,7 @@ combineLatest(weatherData, placeSub).subscribe(result => {
               <div class="col s12 m7">
                 <div class="card">
                   <div class="card-image">
-                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photos[photoNum].photo_reference}&key=AIzaSyB6YDGhzImb7N1RKGlJdWulSm-FLaOQNHU">
+                    <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photos[photoNum].photo_reference}&key=${keys.googleMaps}">
                     <div class="bg-gradient"></div>
                     <span class="card-title">${place.formatted_address}</span>
                   </div>
